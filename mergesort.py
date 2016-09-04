@@ -1,4 +1,4 @@
-"""
+
 # We use the following merge sort algorithm:
 
 import inspect
@@ -6,7 +6,7 @@ import re
 import sys
 import os
 
-list_to_sort = {}
+list_to_sort = [47, 77, 22, 55, 78, 3, 37, 36, 96, 54, 12, 95, 100, 82, 83, 6, 96, 63, 28, 14, 58, 98, 51, 91, 13, 58, 89, 79, 62, 24, 32, 9, 63, 87, 89, 3, 73, 93, 44, 69, 17, 57, 7, 69, 84, 11, 32, 90, 7, 22, 74, 33, 4, 18, 2, 57, 77, 2, 6, 88, 75, 44, 71, 36, 100, 77, 64, 65, 5, 34, 88, 34, 24, 16, 1, 23, 86, 12, 52, 7, 96, 10, 1, 91, 41, 92, 98, 68, 41, 50, 7, 70, 99, 87, 67, 79, 80, 47, 90, 47]
 
 def merge(a, b):
     if len(a) == 0:
@@ -18,7 +18,7 @@ def merge(a, b):
     else:
         return [b[0]] + merge(a, b[1:])
 
-mergesort = \"""
+mergesort = """
 import sys
 import re
 import inspect
@@ -66,7 +66,7 @@ else:
     os.remove("steps/left.py")
 
     with open("steps/right.py", "w") as file:
-        new_list_slug = 'input_list = {{slug}}'.format(slug=right_portion)
+        new_list_slug = 'input_list = {slug}'.format(slug=right_portion)
         adjusted_source = re.sub(r'^input_list = \[.*\]', new_list_slug, module_source, flags=re.MULTILINE)
         file.write(adjusted_source)
 
@@ -75,7 +75,7 @@ else:
     #print(left_sorted)
     #print(right_sorted)
     sorted_sublist = merge(left_sorted, right_sorted)
-\"""
+"""
 
 #del sys.modules[__name__]
 with open("steps/algo.py", "w") as file:
@@ -88,20 +88,3 @@ from steps.algo import sorted_sublist as sorted_list
 os.remove("algo.py")
 my_list = "ank"
 #print(sorted_list)
-"""
-__author__ = 'rogueleaderr'
-
-# basic merge sort implementation from http://stackoverflow.com/a/4574358/998687
-import random
-import os
-
-if __name__ == "__main__":
-    print("let's get started")
-    to_sort = [random.randint(0, 100) for i in range(0, 100)]
-    with open("mergesort.py", "w") as file:
-        mergesort_code = __doc__.format(to_sort)
-        #print(mergesort_code)
-        file.write(mergesort_code)
-    from mergesort import sorted_list
-    os.remove("mergesort.py")
-    print(sorted_list)
