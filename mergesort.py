@@ -24,19 +24,9 @@ import re
 import inspect
 import os
 
-
-def merge(a, b):
-    if len(a) == 0:
-        return b
-    elif len(b) == 0:
-        return a
-    elif a[0] < b[0]:
-        return [a[0]] + merge(a[1:], b)
-    else:
-        return [b[0]] + merge(a, b[1:])
-
 input_list = []
 sublist = input_list
+print(sublist)
 sorted_sublist = []
 if len(sublist) < 2:
     sorted_sublist = sublist
@@ -54,37 +44,44 @@ else:
     module_source = inspect.getsource(current_module)
     print(os.getcwd())
 
-    with open("steps/left.py", "w") as file:
+    with open("steps/left.py", "w") as f:
         new_list_slug = 'input_list = ' + str(left_portion)
         adjusted_source = re.sub(r'^input_list = \[.*\]', new_list_slug, module_source, flags=re.MULTILINE)
-        file.write(adjusted_source)
-    import steps
-    print(dir(steps))
-    import steps.left as sleft
-    from sleft import sorted_sublist as left_sorted
-    #from steps.left import
-    os.remove("steps/left.py")
+        f.write(adjusted_source)
 
-    with open("steps/right.py", "w") as file:
-        new_list_slug = 'input_list = {slug}'.format(slug=right_portion)
-        adjusted_source = re.sub(r'^input_list = \[.*\]', new_list_slug, module_source, flags=re.MULTILINE)
-        file.write(adjusted_source)
+    #del sys.modules["left"]
+    # neccesary to find dynamic module
+    steps_dir = os.path.join(os.getcwd(), "steps")
+    sys.path.insert(0, steps_dir)
+    try:
+        from .left import sorted_sublist
+    except ImportError as e:
+        print(e)
+        import ipdb; ipdb.set_trace()
+        #print(sys.modules.keys())
+        print(sys.meta_path)
+        pf = sys.meta_path
+        #print(os.getcwd())
+        print(__loader__)
+        print(__spec__)
+        raise e
 
-    from .right import sorted_sublist as right_sorted
-    os.remove("steps/right.py")
-    #print(left_sorted)
-    #print(right_sorted)
-    sorted_sublist = merge(left_sorted, right_sorted)
+    left_path = "steps/left.py"
+    if os.isfile(left_path):
+        os.remove(left_path)
+    except FileNotFoundError:
+        import glob
+        from os.path import dirname, basename, isfile
+        files = glob.glob(dirname(__file__)+"/*.py")
+        print(files)
 """
 
 #del sys.modules[__name__]
-with open("steps/algo.py", "w") as file:
-    import sys
-    #mergesort.format(sublist=list_to_sort)#
+with open("steps/algo.py", "w") as f:
     adjusted_source = mergesort.replace('input_list = []', 'input_list = ' + str(list_to_sort))
-    file.write(adjusted_source)
-#print(sys.path)
+    f.write(adjusted_source)
 from steps.algo import sorted_sublist as sorted_list
-os.remove("algo.py")
+os.remove("steps/algo.py")
+print(sorted_list)
 my_list = "ank"
 #print(sorted_list)
