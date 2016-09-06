@@ -1,5 +1,6 @@
 
 # We use the following merge sort algorithm:
+from importlib._bootstrap_external import PathFinder
 
 import inspect
 import re
@@ -23,12 +24,30 @@ import sys
 import re
 import inspect
 import os
+import importlib
+#from importlib._bootstrap_external import PathFinder
+
+def merge(a, b):
+    #ret = a + b
+    #print("merging: " + str(a) + " : " + str(b) + "into " + str(ret))
+
+    #return ret
+    if len(a) == 0:
+        return b
+    elif len(b) == 0:
+        return a
+    elif a[0] < b[0]:
+        return [a[0]] + merge(a[1:], b)
+    else:
+        return [b[0]] + merge(a, b[1:])
 
 input_list = []
 sublist = input_list
 print(sublist)
-sorted_sublist = []
+sorted_sublist = "mancy"
+#import ipdb ; ipdb.set_trace()
 if len(sublist) < 2:
+    print('bottom' + str(sublist))
     sorted_sublist = sublist
 else:
 
@@ -42,19 +61,28 @@ else:
     #    if side in sys.modules:
     #        del sys.modules[side]
     module_source = inspect.getsource(current_module)
-    print(os.getcwd())
 
-    with open("steps/left.py", "w") as f:
+    
+    left_path = "steps/left.py"
+    with open(left_path, "w") as f:
         new_list_slug = 'input_list = ' + str(left_portion)
+        #print(new_list_slug)
         adjusted_source = re.sub(r'^input_list = \[.*\]', new_list_slug, module_source, flags=re.MULTILINE)
         f.write(adjusted_source)
 
-    #del sys.modules["left"]
     # neccesary to find dynamic module
     steps_dir = os.path.join(os.getcwd(), "steps")
-    sys.path.insert(0, steps_dir)
+    if steps_dir not in sys.path:
+        sys.path.insert(0, steps_dir)
+    #path_finder = next(finder for finder in sys.meta_path if finder is PathFinder)
+    #path_finder.invalidate_caches()
+    importlib.invalidate_caches()
+    if "steps.left" in sys.modules:
+        del sys.modules['steps.left']
     try:
-        from .left import sorted_sublist
+        print("left")
+        from .left import sorted_sublist as left_sorted
+
     except ImportError as e:
         print(e)
         import ipdb; ipdb.set_trace()
@@ -66,22 +94,47 @@ else:
         print(__spec__)
         raise e
 
-    left_path = "steps/left.py"
-    if os.isfile(left_path):
-        os.remove(left_path)
-    except FileNotFoundError:
-        import glob
-        from os.path import dirname, basename, isfile
-        files = glob.glob(dirname(__file__)+"/*.py")
-        print(files)
-"""
 
+    #if "steps.left" in sys.modules:
+    #    del sys.modules['steps.left']
+
+    #if os.path.isfile(left_path):
+    #    os.remove(left_path)
+        
+    right_path = "steps/right.py"
+    with open(right_path, "w") as f:
+        new_list_slug = 'input_list = ' + str(right_portion)
+        adjusted_source = re.sub(r'^input_list = \[.*\]', new_list_slug, module_source, flags=re.MULTILINE)
+        f.write(adjusted_source)
+
+    #path_finder.invalidate_caches()
+    importlib.invalidate_caches()
+    print("right")
+
+    if "steps.right" in sys.modules:
+        del sys.modules['steps.right']
+    from .right import sorted_sublist as right_sorted
+    #if "steps.right" in sys.modules:
+    #    del sys.modules['steps.right']
+    #if os.path.isfile(right_path):
+    #    os.remove(right_path)
+    print("left: " +str(left_sorted))
+    print("right: " +str(right_sorted))
+    #import ipdb ; ipdb.set_trace()
+    print(__name__)
+
+    sorted_sublist = merge(left_sorted, right_sorted)
+    sys.modules[__name__].sorted_sublist = sorted_sublist
+
+"""
+del sys.meta_path[1]
 #del sys.modules[__name__]
 with open("steps/algo.py", "w") as f:
     adjusted_source = mergesort.replace('input_list = []', 'input_list = ' + str(list_to_sort))
     f.write(adjusted_source)
+
 from steps.algo import sorted_sublist as sorted_list
 os.remove("steps/algo.py")
-print(sorted_list)
+print("sorted: " + str(sorted_list))
 my_list = "ank"
 #print(sorted_list)
