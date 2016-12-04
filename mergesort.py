@@ -1,13 +1,19 @@
-
 # We use the following merge sort algorithm:
 from importlib._bootstrap_external import PathFinder
 
 import inspect
+import random
 import re
 import sys
 import os
 
-list_to_sort = [47, 77, 22, 55, 78, 3, 37, 36, 96, 54, 12, 95, 100, 82, 83, 6, 96, 63, 28, 14, 58, 98, 51, 91, 13, 58, 89, 79, 62, 24, 32, 9, 63, 87, 89, 3, 73, 93, 44, 69, 17, 57, 7, 69, 84, 11, 32, 90, 7, 22, 74, 33, 4, 18, 2, 57, 77, 2, 6, 88, 75, 44, 71, 36, 100, 77, 64, 65, 5, 34, 88, 34, 24, 16, 1, 23, 86, 12, 52, 7, 96, 10, 1, 91, 41, 92, 98, 68, 41, 50, 7, 70, 99, 87, 67, 79, 80, 47, 90, 47]
+list_to_sort = [47, 77, 22, 55, 78, 3, 37, 36, 96, 54, 12, 95, 100, 82, 83, 6, 96, 63, 28, 14, 58, 98, 51, 91, 13,
+                58, 89, 79, 62, 24, 32, 9, 63, 87, 89, 3, 73, 93, 44, 69, 17, 57, 7, 69, 84, 11, 32, 90, 7, 22, 74,
+                33, 4, 18, 2, 57, 77, 2, 6, 88, 75, 44, 71, 36, 100, 77, 64, 65, 5, 34, 88, 34, 24, 16, 1, 23, 86,
+                12, 52, 7, 96, 10, 1, 91, 41, 92, 98, 68, 41, 50, 7, 70, 99, 87, 67, 79, 80, 47, 90, 47]
+
+list_to_sort = [int(1000*random.random()) for i in range(100)]
+
 
 def merge(a, b):
     if len(a) == 0:
@@ -18,6 +24,7 @@ def merge(a, b):
         return [a[0]] + merge(a[1:], b)
     else:
         return [b[0]] + merge(a, b[1:])
+
 
 mergesort = """
 import sys
@@ -43,15 +50,15 @@ def merge(a, b):
 
 input_list = []
 sublist = input_list
-print(sublist)
+#print(sublist)
 sorted_sublist = "mancy"
 #import ipdb ; ipdb.set_trace()
 if len(sublist) < 2:
-    print('bottom' + str(sublist))
+    #print('bottom' + str(sublist))
     sorted_sublist = sublist
 else:
 
-    print("sublist length: " + str(len(sublist)))
+    #print("sublist length: " + str(len(sublist)))
     split_point = len(sublist) // 2
     left_portion = sublist[:split_point]
     right_portion = sublist[split_point:]
@@ -80,7 +87,7 @@ else:
     if "steps.left" in sys.modules:
         del sys.modules['steps.left']
     try:
-        print("left")
+        #print("left")
         from .left import sorted_sublist as left_sorted
 
     except ImportError as e:
@@ -109,7 +116,7 @@ else:
 
     #path_finder.invalidate_caches()
     importlib.invalidate_caches()
-    print("right")
+    #print("right")
 
     if "steps.right" in sys.modules:
         del sys.modules['steps.right']
@@ -118,23 +125,24 @@ else:
     #    del sys.modules['steps.right']
     #if os.path.isfile(right_path):
     #    os.remove(right_path)
-    print("left: " +str(left_sorted))
-    print("right: " +str(right_sorted))
+    #print("left: " +str(left_sorted))
+    #print("right: " +str(right_sorted))
     #import ipdb ; ipdb.set_trace()
-    print(__name__)
+    #print(__name__)
 
     sorted_sublist = merge(left_sorted, right_sorted)
     sys.modules[__name__].sorted_sublist = sorted_sublist
 
 """
 del sys.meta_path[1]
-#del sys.modules[__name__]
+# del sys.modules[__name__]
 with open("steps/algo.py", "w") as f:
     adjusted_source = mergesort.replace('input_list = []', 'input_list = ' + str(list_to_sort))
     f.write(adjusted_source)
 
 from steps.algo import sorted_sublist as sorted_list
+
 os.remove("steps/algo.py")
 print("sorted: " + str(sorted_list))
 my_list = "ank"
-#print(sorted_list)
+# print(sorted_list)
