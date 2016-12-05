@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="67a8bba6-985c-4a9c-ac1a-2e791a5c2d44" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pycon_proposal.md" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mergesort.py" afterPath="$PROJECT_DIR$/mergesort.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -42,10 +41,10 @@
       <file leaf-file-name="mergesort.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/mergesort.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.45045045">
-              <caret line="10" column="16" selection-start-line="10" selection-start-column="16" selection-end-line="10" selection-end-column="16" />
+            <state vertical-scroll-proportion="0.045045044">
+              <caret line="1" column="12" selection-start-line="1" selection-start-column="12" selection-end-line="1" selection-end-column="12" />
               <folding>
-                <element signature="e#0#13#0" expanded="true" />
+                <element signature="e#2084#2097#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -492,7 +491,13 @@
       <option name="project" value="LOCAL" />
       <updated>1480820136421</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Remove the merge function and clean up">
+      <created>1480895876245</created>
+      <option name="number" value="00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1480895876245</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TodoView" selected-index="4">
@@ -548,7 +553,8 @@
     <MESSAGE value="Got the mergesort to actually sort (somehow)" />
     <MESSAGE value="Placeholder before pycon simplification" />
     <MESSAGE value="Merge branch 'master' of github.com:rogueleaderr/import_madness&#10;&#10;# Conflicts:&#10;#&#9;.gitignore&#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="Merge branch 'master' of github.com:rogueleaderr/import_madness&#10;&#10;# Conflicts:&#10;#&#9;.gitignore&#10;" />
+    <MESSAGE value="Remove the merge function and clean up" />
+    <option name="LAST_COMMIT_MESSAGE" value="Remove the merge function and clean up" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -572,7 +578,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#13#0" expanded="true" />
+            <element signature="e#2084#2097#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -702,10 +708,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mergesort.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.45045045">
-          <caret line="10" column="16" selection-start-line="10" selection-start-column="16" selection-end-line="10" selection-end-column="16" />
+        <state vertical-scroll-proportion="0.045045044">
+          <caret line="1" column="12" selection-start-line="1" selection-start-column="12" selection-end-line="1" selection-end-column="12" />
           <folding>
-            <element signature="e#0#13#0" expanded="true" />
+            <element signature="e#2084#2097#0" expanded="true" />
           </folding>
         </state>
       </provider>

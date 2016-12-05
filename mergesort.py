@@ -1,9 +1,6 @@
-import random
-import os
+"""
+# This is the algorithm we'll use:
 
-list_to_sort = [int(1000*random.random()) for i in range(100)]
-
-mergesort = """
 import sys
 import re
 import inspect
@@ -72,6 +69,13 @@ else:
     sys.modules[__name__].sorted_sublist = sorted_sublist
 """
 
+import random
+import os
+
+list_to_sort = [int(1000*random.random()) for i in range(100)]
+print("unsorted: {}".format(list_to_sort))
+
+mergesort = __doc__
 with open("steps/algo.py", "w") as f:
     adjusted_source = mergesort.replace('input_list = []', 'input_list = {}'.format(list_to_sort))
     f.write(adjusted_source)
