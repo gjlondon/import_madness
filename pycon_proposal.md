@@ -99,16 +99,18 @@ PyCon has seen several excellent talks about the import system in recent years (
 
 * Pausing for gasps of amazement
 
-### High-level overview of the python import system ( 7 minutes)
+### High-level overview of the python import system (10 minutes)
 * `import` is syntactic sugar for __import__()
 
 * Modules are discovered using pathfinders and sys.path
 
 * Modules are turned into code objects and `exec`'d
 
+* sys.modules keeps track of everything that's been imported
+
 * Names are bound in the importer's namespace
 
-### A walk through my merge sort code (10 minutes)
+### A walk through my merge sort code (7 minutes)
 * The actual algorithm code is stored as a doc string on the top level module
 
 * we insert our random list into a predefined place in the doc_string using regex replacement
@@ -139,11 +141,13 @@ PyCon has seen several excellent talks about the import system in recent years (
 
 ##ADDITIONAL NOTES
 
-I have presented at a (non-Python) meetup once but I have never presented at a conference before. I'm excited to break the seal and unleash some `import madness` into the world.
+I have presented at a non-Python meetup once before. It went well! I'm excited speak on a bigger stage and unleash some `import madness` into the world.
 
 I intend to release all of the code from the project (not that it actually requires much code) on Github and write an accompanying blog post that walks through all of the subject matter in more detail. I will also pitch the talk at the local San Francisco Python meetup to try to get some practice.
 
-Once I flesh out the talk, if it's too long I can back on the closing meditations. If it's too short, I can add to the meditations, or talk more about metaprogramming in other languages, or talk about the import system in greater depth.
+This talk uses features that I'm pretty sure are specific to Python 3 and delves into the specifics of Python 3's rewritten `importlib`. So maybe it'll help show people why Python 3 is great. 
+
+Once I flesh out the talk, if it's too long I can cut back on the closing meditations. If it's too short, I can add to the meditations, or talk more about metaprogramming in other languages, or talk about the import system in greater depth.
 
 ##ADDITIONAL REQUIREMENTS
 
