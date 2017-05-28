@@ -1,107 +1,96 @@
 """
-# We use the following merge sort algorithm:
+# This is the algorithm we'll use:
 
-import inspect
-import re
-import sys
-import os
-
-list_to_sort = {}
-
-def merge(a, b):
-    if len(a) == 0:
-        return b
-    elif len(b) == 0:
-        return a
-    elif a[0] < b[0]:
-        return [a[0]] + merge(a[1:], b)
-    else:
-        return [b[0]] + merge(a, b[1:])
-
-mergesort = \"""
 import sys
 import re
 import inspect
 import os
-
-
-def merge(a, b):
-    if len(a) == 0:
-        return b
-    elif len(b) == 0:
-        return a
-    elif a[0] < b[0]:
-        return [a[0]] + merge(a[1:], b)
-    else:
-        return [b[0]] + merge(a, b[1:])
+import importlib
+import time
 
 input_list = []
 sublist = input_list
-sorted_sublist = []
-if len(sublist) < 2:
+is_leaf = len(sublist) < 2
+if is_leaf:
     sorted_sublist = sublist
 else:
-
-    print("sublist length: " + str(len(sublist)))
     split_point = len(sublist) // 2
     left_portion = sublist[:split_point]
     right_portion = sublist[split_point:]
+
     current_module = sys.modules[__name__]
-
-    #for side in ("left", "right"):
-    #    if side in sys.modules:
-    #        del sys.modules[side]
     module_source = inspect.getsource(current_module)
-    print(os.getcwd())
 
-    with open("steps/left.py", "w") as file:
+    left_path = "left.py"
+    with open(left_path, "w") as f:
         new_list_slug = 'input_list = ' + str(left_portion)
         adjusted_source = re.sub(r'^input_list = \[.*\]', new_list_slug, module_source, flags=re.MULTILINE)
-        file.write(adjusted_source)
-    import steps
-    print(dir(steps))
-    import steps.left as sleft
-    from sleft import sorted_sublist as left_sorted
-    #from steps.left import
-    os.remove("steps/left.py")
+        f.write(adjusted_source)
 
-    with open("steps/right.py", "w") as file:
-        new_list_slug = 'input_list = {{slug}}'.format(slug=right_portion)
+    importlib.invalidate_caches()
+
+    if "left" in sys.modules:
+        del sys.modules['left']
+
+    from left import sorted_sublist as left_sorted
+    if os.path.isfile(left_path):
+        os.remove(left_path)
+        
+    right_path = "right.py"
+    with open(right_path, "w") as f:
+        new_list_slug = 'input_list = ' + str(right_portion)
         adjusted_source = re.sub(r'^input_list = \[.*\]', new_list_slug, module_source, flags=re.MULTILINE)
-        file.write(adjusted_source)
+        f.write(adjusted_source)
 
-    from .right import sorted_sublist as right_sorted
-    os.remove("steps/right.py")
-    #print(left_sorted)
-    #print(right_sorted)
-    sorted_sublist = merge(left_sorted, right_sorted)
-\"""
+    importlib.invalidate_caches()
 
-#del sys.modules[__name__]
-with open("steps/algo.py", "w") as file:
-    import sys
-    #mergesort.format(sublist=list_to_sort)#
-    adjusted_source = mergesort.replace('input_list = []', 'input_list = ' + str(list_to_sort))
-    file.write(adjusted_source)
-#print(sys.path)
-from steps.algo import sorted_sublist as sorted_list
-os.remove("algo.py")
-my_list = "ank"
-#print(sorted_list)
+    if "right" in sys.modules:
+       del sys.modules['right']
+    from right import sorted_sublist as right_sorted
+
+    if os.path.isfile(right_path):
+        os.remove(right_path)
+
+    # merge
+    # TODO use a better merge
+    merged_list = []
+    while (left_sorted or right_sorted):
+        if not left_sorted:
+            bigger = right_sorted.pop()
+        elif not right_sorted:
+            bigger = left_sorted.pop()
+        elif left_sorted[-1] >= right_sorted[-1]:
+            bigger = left_sorted.pop()
+        else:
+            bigger = right_sorted.pop()
+        merged_list.append(bigger)
+    merged_list.reverse()
+    sorted_sublist = merged_list
+
+sys.modules[__name__].sorted_sublist = sorted_sublist
 """
-__author__ = 'rogueleaderr'
 
-# basic merge sort implementation from http://stackoverflow.com/a/4574358/998687
 import random
 import os
+import time
 
-if __name__ == "__main__":
-    print("let's get started")
-    to_sort = [random.randint(0, 100) for i in range(0, 100)]
-    with open("mergesort.py", "w") as file:
-        mergesort_code = __doc__.format(to_sort)
-        #print(mergesort_code)
-        file.write(mergesort_code)
-    from mergesort import sorted_list
-    os.remove("mergesort.py")
-    print(sorted_list)
+random.seed(100)
+list_to_sort = [int(1000*random.random()) for i in range(100)]
+print("unsorted: {}".format(list_to_sort))
+
+start_time = time.time()
+mergesort = __doc__
+with open("merge_sort.py", "w") as f:
+    adjusted_source = mergesort.replace('input_list = []', 'input_list = {}'.format(list_to_sort))
+    f.write(adjusted_source)
+
+from merge_sort import sorted_sublist as sorted_list
+
+os.remove("merge_sort.py")
+finished_time = time.time()
+
+print("original sorted: {}".format(sorted(list_to_sort)))
+print("import sorted: {}".format(sorted_list))
+print("Sort took {}".format(finished_time - start_time))
+
+assert sorted_list == sorted(list_to_sort)
