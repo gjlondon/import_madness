@@ -1,7 +1,11 @@
+import time
+
 __author__ = 'rogueleaderr'
 
 
 def bubble_sort(list_to_sort):
+    start_time = time.time()
+
     while True:
         list_len = len(list_to_sort)
         max_index = (list_len - 1)
@@ -15,4 +19,7 @@ def bubble_sort(list_to_sort):
                 swaps += 1
         if swaps == 0:
             break
+
+    finished_time = time.time()
+    print("Sort took {}".format(finished_time - start_time))
     return list_to_sort

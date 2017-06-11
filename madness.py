@@ -1,3 +1,6 @@
+
+
+
 """
 # This is the algorithm we'll use:
 
@@ -68,6 +71,8 @@ else:
     sorted_sublist = merged_list
 
 sys.modules[__name__].sorted_sublist = sorted_sublist
+
+
 """
 
 import random
@@ -75,6 +80,7 @@ import os
 import time
 
 random.seed(100)
+
 list_to_sort = [int(1000*random.random()) for i in range(100)]
 print("unsorted: {}".format(list_to_sort))
 
@@ -94,3 +100,5 @@ print("import sorted: {}".format(sorted_list))
 print("Sort took {}".format(finished_time - start_time))
 
 assert sorted_list == sorted(list_to_sort)
+
+
