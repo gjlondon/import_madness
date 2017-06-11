@@ -79,7 +79,7 @@ import random
 import os
 import time
 
-random.seed(100)
+random.seed(1001)
 
 list_to_sort = [int(1000*random.random()) for i in range(100)]
 print("unsorted: {}".format(list_to_sort))
