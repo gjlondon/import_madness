@@ -28,6 +28,7 @@ def merge_sort(input_list):
                 bigger = right_sorted.pop()
             merged_list.append(bigger)
         merged_list.reverse()
+
         return merged_list
 
 
