@@ -2,11 +2,11 @@
 
 
 # cafe.py
-import vikings
+from person import likes_spam
 
-this_horde = vikings.VikingHorde()
-
-if this_horde.origin == "Denmark":
-    menu = ['spam', 'eggs', 'baked beans']
+if likes_spam:
+    menu = ['eggs', 'baked beans']
 else:
-    menu = ['lutefisk', 'tofu']
+    menu = ['spam']
+
+

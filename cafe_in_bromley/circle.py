@@ -1,10 +1,8 @@
 
 
 
-#  __main__
-from cafe import this_horde
+# __main__
+import good_person
 
-if __name__ == "__main__":
-    this_horde.pillage()
-
+good_person.order()
 

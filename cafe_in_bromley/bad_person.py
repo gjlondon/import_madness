@@ -1,11 +1,9 @@
 import sys
 
-
+# person.py
 
 
 #import good_cafe as cafe
-
-# person.py
 import cafe
 
 likes_spam = False

@@ -1,14 +1,10 @@
-import sys
 
 
-
-
-#import good_cafe as cafe
 
 # person.py
-import cafe
-
 likes_spam = False
+
+import cafe
 
 def order():
     if cafe.menu == ['spam']:

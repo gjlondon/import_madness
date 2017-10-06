@@ -54,6 +54,8 @@ else:
     if os.path.isfile(right_path):
         os.remove(right_path)
 
+    print("Left sorted: {}".format(left_sorted))
+    print("Right sorted: {}".format(right_sorted))
     # merge
     # TODO use a better merge
     merged_list = []
@@ -104,7 +106,7 @@ os.remove("merge_sort.py")
 finished_time = time.time()
 
 print("\n\nList sorted using import system: {}".format(sorted_list))
-print("\nSort took {}ms".format(finished_time - start_time))
+print("\nSort took {}".format(finished_time - start_time))
 
 print("\n\nVerifying sorting against conventional sorted()")
 assert sorted_list == sorted(list_to_sort)
